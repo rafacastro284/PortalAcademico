@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal do Aluno</title>
+  <link rel="stylesheet" href="aluno.css" />
+</head>
+<body>
+  <div class="faixa-topo"></div>
+  
+  <div class="container-aluno">
+    <header class="cabecalho-aluno">
+      <div class="info-aluno">
+        <h1>Portal do Aluno</h1>
+        <div class="saudacao-turma">
+          <div class="saudacao">
+            <span class="ola">Olá,</span>
+            <span id="nomeAluno" class="nome-aluno">Carregando...</span>
+          </div>
+          <div class="turma-info">
+            <span id="turmaAluno" class="turma-aluno">9º Ano B</span>
+          </div>
+        </div>
+        <div class="dados-adicionais">
+          <span id="matriculaAluno" class="matricula">📋 Matrícula: 2023023055</span>
+        </div>
+      </div>
+      <button class="btn-sair">Sair</button>
+    </header>
+
+    <div class="metricas-aluno">
+      <div class="card-metrica">
+        <div class="icone-metrica">📚</div>
+        <div class="info-metrica">
+          <span class="valor" id="totalDisciplinas">0</span>
+          <span class="label">Disciplinas</span>
+        </div>
+      </div>
+      <div class="card-metrica">
+        <div class="icone-metrica">📊</div>
+        <div class="info-metrica">
+          <span class="valor" id="mediaGeral">0.0</span>
+          <span class="label">Média Geral</span>
+        </div>
+      </div>
+      <div class="card-metrica">
+        <div class="icone-metrica">✅</div>
+        <div class="info-metrica">
+          <span class="valor" id="frequenciaGeral">0%</span>
+          <span class="label">Frequência</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- mihas disciplinas -->
+    <section class="secao-disciplinas">
+      <h2>Minhas Disciplinas</h2>
+      <p class="subtitulo-secao">Clique em uma disciplina para ver suas notas e frequência</p>
+      
+      <div class="grid-disciplinas" id="lista-disciplinas">
+        <div class="card-disciplina carregando">
+          <div class="skeleton-loader"></div>
+        </div>
+        <div class="card-disciplina carregando">
+          <div class="skeleton-loader"></div>
+        </div>
+        <div class="card-disciplina carregando">
+          <div class="skeleton-loader"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- detalhes da disciplina -->
+    <section id="secao-detalhes" class="secao-detalhes" style="display: none;">
+      <div class="cabecalho-detalhes">
+        <button class="btn-voltar" onclick="voltarParaDisciplinas()">← Voltar para Disciplinas</button>
+        <h2 id="titulo-disciplina">Disciplina</h2>
+      </div>
+
+      <!-- abas de notas e frequencia -->
+      <div class="abas-detalhes">
+        <button class="aba-btn active" onclick="mostrarAba('notas')">📋 Notas</button>
+        <button class="aba-btn" onclick="mostrarAba('frequencia')">📅 Frequência</button>
+      </div>
+
+      <!-- conteudo da ada de notas -->
+      <div id="aba-notas" class="aba-conteudo active">
+        <div class="tabela-container">
+          <table class="tabela-notas" id="tabela-notas">
+            <thead>
+              <tr>
+                <th>Bimestre</th>
+                <th>AV1</th>
+                <th>AV2</th>
+                <th>AV3</th>
+                <th>Média</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-notas">
+            </tbody>
+          </table>
+          <div id="sem-notas" class="sem-dados">
+            <div class="icone-sem-dados">📝</div>
+            <h3>Nenhuma nota lançada</h3>
+            <p>As notas serão disponibilizadas pelo professor.</p>
+          </div>
+        </div>
+
+        <div class="resumo-notas">
+          <h3>Resumo da Disciplina</h3>
+          <div class="grid-resumo-notas">
+            <div class="card-resumo-nota">
+              <div class="resumo-icone">📊</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="media-disciplina">0.0</span>
+                <span class="resumo-label">Média Atual</span>
+              </div>
+            </div>
+            <div class="card-resumo-nota">
+              <div class="resumo-icone">🎯</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="situacao-disciplina">-</span>
+                <span class="resumo-label">Situação</span>
+              </div>
+            </div>
+            <div class="card-resumo-nota">
+              <div class="resumo-icone">📚</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="bimestres-lancados">0</span>
+                <span class="resumo-label">Bimestres</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- conteudo da aba de frequencia -->
+      <div id="aba-frequencia" class="aba-conteudo">
+        <div class="filtros-frequencia">
+          <div class="filtro-grupo">
+            <label for="filtro-mes">Filtrar por mês:</label>
+            <select id="filtro-mes" onchange="filtrarFrequencia()">
+              <option value="todos">Todos os meses</option>
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tabela-container">
+          <table class="tabela-frequencia" id="tabela-frequencia">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Dia da Semana</th>
+                <th>Status</th>
+                <th>Observações</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-frequencia">
+            </tbody>
+          </table>
+          <div id="sem-frequencia" class="sem-dados">
+            <div class="icone-sem-dados">📅</div>
+            <h3>Nenhum registro de frequência</h3>
+            <p>Os registros de frequência serão atualizados pelo professor.</p>
+          </div>
+        </div>
+
+        <div class="resumo-frequencia">
+          <h3>Resumo de Frequência</h3>
+          <div class="grid-resumo-frequencia">
+            <div class="card-resumo-freq">
+              <div class="resumo-icone">📈</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="frequencia-disciplina">0%</span>
+                <span class="resumo-label">Frequência</span>
+              </div>
+            </div>
+            <div class="card-resumo-freq">
+              <div class="resumo-icone">✅</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="total-presencas">0</span>
+                <span class="resumo-label">Presenças</span>
+              </div>
+            </div>
+            <div class="card-resumo-freq">
+              <div class="resumo-icone">❌</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="total-faltas">0</span>
+                <span class="resumo-label">Faltas</span>
+              </div>
+            </div>
+            <div class="card-resumo-freq">
+              <div class="resumo-icone">🖊️</div>
+              <div class="resumo-info">
+                <span class="resumo-valor" id="total-justificadas">0</span>
+                <span class="resumo-label">Justificadas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="faixa-rodape">
+    <div class="conteudo-rodape">
+      <span>Copyright © 2025 - Portal Acadêmico</span>
+      <span id="data-atual"></span>
+    </div>
+  </div>
+  
+  <script src="aluno.js"></script>
+</body>
+</html>

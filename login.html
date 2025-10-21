@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="imagens/favicon.png" type="imagens/favicon">
+  <title>Login - Portal Acadêmico</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="faixa-topo"></div>
+  <div class="main">
+    <div class="titulopagina">
+        <h1 class="titulo">Portal Acadêmico</h1>
+    </div>
+    <div class="container">
+      <form class="login-box" onsubmit="return validarLogin(event)">
+        <h2>Acesse sua conta</h2>
+
+        <div class="input-group">
+          <label for="cpf">CPF</label>
+          <input type="text" id="cpf" placeholder="Digite seu CPF" maxlength="14" required />
+        </div>
+
+        <div class="input-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="Digite sua senha" required />
+        </div>
+
+        <div class="options">
+          <a href="#">Esqueceu a senha?</a>
+        </div>
+
+        <button type="submit" class="btn">Entrar</button>
+
+      </form>
+    </div>
+  </div>
+  <div class="faixa-rodape">Copyright © 2025 </div>
+  
+  <script src="usuario.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

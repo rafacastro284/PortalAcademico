@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastrar Usuário - Admin</title>
+  <link rel="stylesheet" href="cadastrar.css" />
+</head>
+<body>
+  <div class="faixa-topo"></div>
+  
+  <div class="container-cadastro">
+    <header class="cabecalho-cadastro">
+      <a href="admin.html" class="btn-voltar">← Voltar a página principal</a>
+      <h1>Cadastrar Novo Usuário</h1>
+    </header>
+
+    <form class="form-cadastro" onsubmit="return cadastrarUsuario(event)">
+      <div class="form-grid">
+        <div class="input-group">
+          <label for="tipoUsuario">Tipo de Usuário *</label>
+          <select id="tipoUsuario" required onchange="mostrarCamposEspecificos()">
+            <option value="">Selecione o tipo</option>
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+            <option value="admin">Administrador</option>
+            <option value="diretor">Diretor</option> 
+            <option value="secretario">Secretário</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="nome">Nome Completo *</label>
+          <input type="text" id="nome" required placeholder="Ex: Maria Silva Oliveira">
+        </div>
+
+        <div class="input-group">
+          <label for="cpf">CPF *</label>
+          <input type="text" id="cpf" maxlength="14" required placeholder="000.000.000-00">
+        </div>
+
+        <div class="input-group">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" required placeholder="usuario@escola.com">
+        </div>
+
+        <div id="camposAluno" class="campos-especificos" style="display: none;">
+          <div class="input-group">
+            <label for="matricula">Matrícula *</label>
+            <input type="text" id="matricula" placeholder="20240001">
+          </div>
+
+          <div class="input-group">
+            <label for="turma">Turma</label>
+            <select id="turma">
+              <option value="">Selecione a turma</option>
+              <option value="6A">6º Ano A</option>
+              <option value="6B">6º Ano B</option>
+              <option value="7A">7º Ano A</option>
+              <option value="7B">7º Ano B</option>
+              <option value="8A">8º Ano A</option>
+              <option value="8B">8º Ano B</option>
+              <option value="9B">9º Ano A</option>
+              <option value="9B">9º Ano B</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="dataNascimento">Data de Nascimento</label>
+            <input type="date" id="dataNascimento">
+          </div>
+        </div>
+
+        <div id="camposProfessor" class="campos-especificos" style="display: none;">
+          <div class="input-group">
+            <label for="registro">Registro Profissional *</label>
+            <input type="text" id="registro" placeholder="PROF001">
+          </div>
+
+          <div class="input-group">
+            <label for="disciplina">Disciplina Principal</label>
+            <select id="disciplina">
+              <option value="">Selecione a disciplina</option>
+              <option value="matematica">Matemática</option>
+              <option value="portugues">Português</option>
+              <option value="historia">História</option>
+              <option value="geografia">Geografia</option>
+              <option value="fisica">Física</option>
+              <option value="quimica">Química</option>
+              <option value="biologia">Biologia</option>
+              <option value="artes">Artes</option>
+              <option value="educacaofisica">Educação Física</option>
+              <option value="quimica">Inglês</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="formacao">Formação Acadêmica</label>
+            <input type="text" id="formacao" placeholder="Ex: Licenciatura em Matemática">
+          </div>
+        </div>
+
+        <div id="camposAdmin" class="campos-especificos" style="display: none;">
+          <div class="input-group">
+            <label for="nivelAcesso">Nível de Acesso</label>
+            <select id="nivelAcesso">
+              <option value="completo">Acesso Completo</option>
+              <option value="parcial">Acesso Parcial</option>
+            </select>
+          </div>
+        </div>
+        <div id="camposDiretor" class="campos-especificos" style="display: none;">
+          <div class="input-group">
+            <label for="registroDiretor">Registro *</label>
+            <input type="text" id="registroDiretor" placeholder="DIR001">
+          </div>
+
+          <div class="input-group">
+            <label for="nivelAcessoDiretor">Nível de Acesso</label>
+            <select id="nivelAcessoDiretor">
+              <option value="completo">Acesso Completo</option>
+              <option value="parcial">Acesso Parcial</option>
+            </select>
+          </div>
+        </div>
+
+      <div id="camposSecretario" class="campos-especificos" style="display: none;">
+        <div class="input-group">
+           <label for="registroSecretario">Registro *</label>
+          <input type="text" id="registroSecretario" placeholder="SEC001">
+        </div>
+        <div class="input-group">
+          <label for="nivelAcessoSecretario">Nível de Acesso</label>
+          <select id="nivelAcessoSecretario">
+            <option value="matriculas">Apenas Matrículas</option>
+            <option value="completo">Acesso Completo</option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" onclick="window.location.href='admin.html'">Cancelar</button>
+        <button type="submit" class="btn-cadastrar">Cadastrar Usuário</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="faixa-rodape">Copyright © 2025</div>
+  
+  <script src="usuario.js"></script>
+  <script src="cadastrar.js"></script>
+</body>
+</html>

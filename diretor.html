@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal do Diretor</title>
+  <link rel="stylesheet" href="diretor.css" />
+</head>
+<body>
+  <div class="faixa-topo"></div>
+  
+  <div class="container-diretor">
+    <header class="cabecalho-diretor">
+      <div class="info-diretor">
+        <h1>Portal do Diretor</h1>
+        <div class="dados-diretor">
+          <div class="saudacao-registro">
+            <span class="ola">Olá,</span>
+            <span id="nomeDiretor" class="nome-diretor">Carregando...</span>
+          </div>
+          <div class="info-cargo-registro">
+            <span id="registroDiretor" class="registro">Registro: </span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-sair">Sair</button>
+    </header>
+
+    <div class="metricas-diretor">
+      <div class="card-metrica">
+        <div class="icone-metrica">👨‍🎓</div>
+        <div class="info-metrica">
+          <span class="valor" id="totalAlunos">0</span>
+          <span class="label">Alunos</span>
+        </div>
+      </div>
+      <div class="card-metrica">
+        <div class="icone-metrica">👨‍🏫</div>
+        <div class="info-metrica">
+          <span class="valor" id="totalProfessores">0</span>
+          <span class="label">Professores</span>
+        </div>
+      </div>
+      <div class="card-metrica">
+        <div class="icone-metrica">🧮</div>
+        <div class="info-metrica">
+          <span class="valor" id="totalTurmas">0</span>
+          <span class="label">Turmas</span>
+        </div>
+      </div>
+      <div class="card-metrica">
+        <div class="icone-metrica">📊</div>
+        <div class="info-metrica">
+          <span class="valor" id="mediaGeral">0.0</span>
+          <span class="label">Média Geral</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- visao geral -->
+    <section class="secao-visao-geral">
+      <h2>Visão Geral da Escola</h2>
+      
+      <div class="grid-acoes">
+        <div class="card-acao" onclick="mostrarRelatorio('desempenho')">
+          <div class="icone">📈</div>
+          <h3>Desempenho Acadêmico</h3>
+          <p>Relatórios de notas e aproveitamento por turma</p>
+        </div>
+
+        <div class="card-acao" onclick="mostrarRelatorio('frequencia')">
+          <div class="icone">📅</div>
+          <h3>Frequência Escolar</h3>
+          <p>Controle de presenças e faltas geral</p>
+        </div>
+
+        <div class="card-acao" onclick="mostrarRelatorio('professores')">
+          <div class="icone">👨‍🏫</div>
+          <h3>Corpo Docente</h3>
+          <p>Informações sobre professores e disciplinas</p>
+        </div>
+
+        <div class="card-acao" onclick="mostrarRelatorio('turmas')">
+          <div class="icone">👥</div>
+          <h3>Turmas e Séries</h3>
+          <p>Distribuição de alunos por turma</p>
+        </div>
+
+        <div class="card-acao" onclick="mostrarRelatorio('disciplinas')">
+          <div class="icone">📒</div>
+          <h3>Desempenho por Disciplina</h3>
+          <p>Médias e resultados por matéria</p>
+        </div>
+
+        <div class="card-acao" onclick="exportarRelatorioGeral()">
+          <div class="icone">📥</div>
+          <h3>Exportar Relatório</h3>
+          <p>Gerar relatório completo em PDF</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- relatorios -->
+    <section id="secao-relatorios" class="secao-relatorios" style="display: none;">
+      <div class="cabecalho-relatorios">
+        <button class="btn-voltar" onclick="voltarParaVisaoGeral()">← Voltar para Visão Geral</button>
+        <h2 id="titulo-relatorio">Relatório</h2>
+      </div>
+
+      <div class="filtros-relatorio">
+        <div class="filtro-grupo">
+          <label for="filtro-turma">Turma:</label>
+          <select id="filtro-turma" onchange="filtrarRelatorio()">
+            <option value="todas">Todas as Turmas</option>
+            <option value="6A">6º Ano A</option>
+            <option value="6B">6º Ano B</option>
+            <option value="7A">7º Ano A</option>
+            <option value="7B">7º Ano B</option>
+            <option value="8A">8º Ano A</option>
+            <option value="8B">8º Ano B</option>
+            <option value="9A">9º Ano A</option>
+            <option value="9B">9º Ano B</option>
+          </select>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtro-bimestre">Bimestre:</label>
+          <select id="filtro-bimestre" onchange="filtrarRelatorio()">
+            <option value="todos">Todos os Bimestres</option>
+            <option value="1">1º Bimestre</option>
+            <option value="2">2º Bimestre</option>
+            <option value="3">3º Bimestre</option>
+            <option value="4">4º Bimestre</option>
+          </select>
+        </div>
+
+        <div class="filtro-grupo">
+          <label for="filtro-disciplina">Disciplina:</label>
+          <select id="filtro-disciplina" onchange="filtrarRelatorio()">
+            <option value="todas">Todas as Disciplinas</option>
+            <option value="matematica">Matemática</option>
+            <option value="portugues">Português</option>
+            <option value="historia">História</option>
+            <option value="geografia">Geografia</option>
+            <option value="fisica">Física</option>
+            <option value="quimica">Química</option>
+            <option value="biologia">Biologia</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- conteudo dos relatorios -->
+      <div class="conteudo-relatorio">
+        <!-- relatorio de desempenho -->
+        <div id="relatorio-desempenho" class="relatorio-conteudo">
+          <div class="resumo-desempenho">
+            <h3>Resumo do Desempenho</h3>
+            <div class="grid-resumo">
+              <div class="card-resumo">
+                <div class="resumo-icone">📊</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="media-geral-turma">0.0</span>
+                  <span class="resumo-label">Média Geral</span>
+                </div>
+              </div>
+              <div class="card-resumo">
+                <div class="resumo-icone">✅</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="aprovados-turma">0</span>
+                  <span class="resumo-label">Aprovados</span>
+                </div>
+              </div>
+              <div class="card-resumo">
+                <div class="resumo-icone">⚠️</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="recuperacao-turma">0</span>
+                  <span class="resumo-label">Recuperação</span>
+                </div>
+              </div>
+              <div class="card-resumo">
+                <div class="resumo-icone">❌</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="reprovados-turma">0</span>
+                  <span class="resumo-label">Reprovados</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabela-container">
+            <h4>Desempenho por Aluno</h4>
+            <table class="tabela-relatorio" id="tabela-desempenho">
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>Turma</th>
+                  <th>Média</th>
+                  <th>Frequência</th>
+                  <th>Situação</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-desempenho">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- relatorio de frequencia -->
+        <div id="relatorio-frequencia" class="relatorio-conteudo" style="display: none;">
+          <div class="resumo-frequencia">
+            <h3>Resumo de Frequência</h3>
+            <div class="grid-resumo">
+              <div class="card-resumo">
+                <div class="resumo-icone">📈</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="frequencia-geral">0%</span>
+                  <span class="resumo-label">Frequência Geral</span>
+                </div>
+              </div>
+              <div class="card-resumo">
+                <div class="resumo-icone">✅</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="total-presencas">0</span>
+                  <span class="resumo-label">Total Presenças</span>
+                </div>
+              </div>
+              <div class="card-resumo">
+                <div class="resumo-icone">❌</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="total-faltas">0</span>
+                  <span class="resumo-label">Total Faltas</span>
+                </div>
+              </div>
+              <div class="card-resumo">
+                <div class="resumo-icone">⚠️</div>
+                <div class="resumo-info">
+                  <span class="resumo-valor" id="alunos-criticos">0</span>
+                  <span class="resumo-label">Alunos Críticos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabela-container">
+            <h4>Frequência por Turma</h4>
+            <table class="tabela-relatorio" id="tabela-frequencia">
+              <thead>
+                <tr>
+                  <th>Turma</th>
+                  <th>Total Alunos</th>
+                  <th>Frequência Média</th>
+                  <th>Alunos com Baixa Frequência</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-frequencia">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- relatorio de professores -->
+        <div id="relatorio-professores" class="relatorio-conteudo" style="display: none;">
+          <div class="tabela-container">
+            <h4>Corpo Docente</h4>
+            <table class="tabela-relatorio" id="tabela-professores">
+              <thead>
+                <tr>
+                  <th>Professor</th>
+                  <th>Registro</th>
+                  <th>Disciplina</th>
+                  <th>Turmas</th>
+                  <th>Total Alunos</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-professores">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="faixa-rodape">
+    <div class="conteudo-rodape">
+      <span>Copyright © 2025 - Portal Acadêmico</span>
+      <span id="data-atual"></span>
+    </div>
+  </div>
+  
+  <script src="diretor.js"></script>
+</body>
+</html>
